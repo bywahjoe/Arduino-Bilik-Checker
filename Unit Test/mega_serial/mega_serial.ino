@@ -8,8 +8,8 @@ void setup() {
 void loop() {
   int a = random(1, 5);
   int b = random(30, 40);
-  String oke = String(a) + ',' + String(b) + ',';
-  Serial2.println(oke);
+  String oke = +","+String(a) + ',' + String(b) + ',';
+  Serial2.write(oke.c_str());
 
   delay(4000);
 

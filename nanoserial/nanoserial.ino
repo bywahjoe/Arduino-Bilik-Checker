@@ -39,7 +39,7 @@ void loop(void)
       delay(1);
       recv.trim();
     }
-    if (recv.length() > 0) {
+    if (recv.length() > 0 && recv.startsWith(",") && recv.endsWith(",")) {
 
       //Serial.println(recv);
       handleSerial(recv);
@@ -57,7 +57,7 @@ void handleSerial(String recv) {
   int maxData = 2, index = 0;
   String dataSerial[2];
 
-  for (int i = 0; i < recv.length(); i++) {
+  for (int i = 1; i < recv.length(); i++) {
     if (recv[i] == ',') {
       index++;
       continue;
