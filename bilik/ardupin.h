@@ -1,5 +1,5 @@
 #define IR_suhu A4
-#define IR_masuk A1
+#define IR_masuk A10 //A1
 #define IR_keluar A2
 #define IR_tolak A7
 

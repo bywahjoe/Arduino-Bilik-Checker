@@ -18,14 +18,16 @@ int inkuTutup = 0;
 int outkuBuka = 94;
 int outkuTutup = 180;
 
-int setMaxPerson = 2;
+int setMaxPerson = 10;
 int statusPerson = setMaxPerson;
-
+int statusSuhu;
 float suhuNormal = 37;
 float cekSuhu;
 
 void setup() {
   Serial.begin(9600);
+  Serial2.begin(4800);
+  
   lcd.init();
   lcd.backlight();
   mlx.begin();
@@ -42,6 +44,8 @@ void setup() {
   pinMode(IR_masuk, INPUT);
   pinMode(IR_keluar, INPUT);
   pinMode(IR_tolak, INPUT);
+  //nanoSerial();
+
 }
 
 void loop() {
@@ -60,12 +64,15 @@ void loop() {
   Serial.println(cekSuhu);
   Serial.print("CAPACITY : ");
   Serial.println(statusPerson);
+  delay(200);
 #endif
 
   if (digitalRead(IR_suhu) == LOW) {
     delay(1000);
     cekSuhu = mlx.readObjectTempC() + 2;
     tampil();
+    statusSuhu=cekSuhu;
+    nanoSerial();
     if (statusPerson > 0) {
 
       if (cekSuhu <= suhuNormal) {
@@ -76,6 +83,7 @@ void loop() {
           if (digitalRead(IR_masuk) == LOW)break;
         };
         minPerson();
+        nanoSerial();
         delay(3000);
         inTutup();
       } else {
@@ -114,10 +122,16 @@ void loop() {
     delay(500);
     plusPerson();
     noticeSuhu();
+    nanoSerial();
 
 
   }
 
+}
+void nanoSerial(){
+  String oke = String(statusPerson);
+  Serial2.println(oke);
+  
 }
 void plusPerson() {
   int plusPerson = statusPerson + 1;
